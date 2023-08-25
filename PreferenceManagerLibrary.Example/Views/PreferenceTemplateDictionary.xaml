@@ -1,0 +1,202 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:PreferenceManagerLibrary.Preferences;assembly=PreferenceManagerLibrary"
+                    xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
+    <DataTemplate x:Key="ListStringPreferenceTemplate"
+                  DataType="{x:Type p:SingleSelectPreference`1}">
+        <Grid Margin="0,4,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="prefName"
+                                  MinWidth="170"
+                                  Width="Auto" />
+                <ColumnDefinition SharedSizeGroup="prefValue"
+                                  Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       Margin="0,0,12,0"
+                       Text="{Binding Name}" />
+            <ComboBox Grid.Column="1"
+                      ItemsSource="{Binding Values}"
+                      SelectedItem="{Binding EditableValue}" />
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="ListCulturePreferenceTemplate"
+                  DataType="{x:Type p:SingleSelectPreference`1}">
+        <Grid Margin="0,4,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="prefName"
+                                  MinWidth="170"
+                                  Width="Auto" />
+                <ColumnDefinition SharedSizeGroup="prefValue"
+                                  Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       Margin="0,0,12,0"
+                       Text="{Binding Name}" />
+            <ComboBox Grid.Column="1"
+                      ItemsSource="{Binding Values}"
+                      SelectedItem="{Binding EditableValue}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type globalization:CultureInfo}">
+                        <TextBlock Text="{Binding EnglishName}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="ListBrushPreferenceTemplate"
+                  DataType="{x:Type p:SingleSelectPreference`1}">
+        <Grid Margin="0,4,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="prefName"
+                                  MinWidth="170"
+                                  Width="Auto" />
+                <ColumnDefinition SharedSizeGroup="prefValue"
+                                  Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       Margin="0,0,12,0"
+                       Text="{Binding Name}" />
+            <ComboBox Grid.Column="1"
+                      ItemsSource="{Binding Values}"
+                      SelectedItem="{Binding EditableValue}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type Brush}">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="16"
+                                       Height="16"
+                                       Stroke="Black"
+                                       Fill="{Binding}" />
+                            <Separator Margin="6" />
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="BoolPreferenceTemplate"
+                  DataType="{x:Type p:BoolPreference}">
+        <CheckBox Content="{Binding Name}"
+                  IsChecked="{Binding EditableValue}"
+                  Margin="0" />
+    </DataTemplate>
+    <DataTemplate x:Key="InputPreferenceTemplate"
+                  DataType="{x:Type p:InputPreference}">
+        <Grid Margin="0,4,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="prefName"
+                                  MinWidth="170"
+                                  Width="1*" />
+                <ColumnDefinition Width="1*"
+                                  MinWidth="170" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       Margin="0,0,12,0"
+                       Text="{Binding Name}" />
+            <TextBox Grid.Column="1"
+                     Text="{Binding EditableValue}"
+                     IsEnabled="{Binding IsEnabled}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEditableValid}"
+                                         Value="False">
+                                <Setter Property="BorderBrush"
+                                        Value="Red" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="LabelPreferenceTemplate">
+        <TextBlock>
+                <Hyperlink NavigateUri="https://github.com/PetrK39?tab=repositories">
+                    <TextBlock Text="Github Repository" />
+                </Hyperlink>
+            </TextBlock>
+    </DataTemplate>
+    <DataTemplate x:Key="RangePreferenceTemplate"
+                  DataType="{x:Type p:RangePreference}">
+        <Grid Margin="0,4,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="prefName"
+                                  MinWidth="170"
+                                  Width="1*" />
+                <ColumnDefinition Width="1*"
+                                  MinWidth="170" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding Name}"
+                       Grid.Column="0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsEditableValid}"
+                                         Value="False">
+                                <Setter Property="Foreground"
+                                        Value="Red" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <Slider Grid.Column="1"
+                    Value="{Binding EditableValue}"
+                    Minimum="{Binding MinValue}"
+                    Maximum="{Binding MaxValue}"
+                    SmallChange="{Binding Step}"
+                    IsSnapToTickEnabled="True" />
+            <TextBlock Text="{Binding Error}"
+                       Grid.Row="1"
+                       Grid.ColumnSpan="2"
+                       Foreground="Red"
+                       HorizontalAlignment="Right">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=DataContext.IsEditableValid}"
+                                         Value="True">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="ListCultureMultiPreferenceTemplate"
+                  DataType="{x:Type p:MultiSelectPreference`1}">
+        <Grid Margin="0,4,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="prefName"
+                                  MinWidth="170"
+                                  Width="1*" />
+                <ColumnDefinition Width="1*"
+                                  MinWidth="170" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       Margin="0,0,12,0"
+                       Text="{Binding Name}" />
+            <xctk:CheckListBox  Grid.Column="1"
+                                ItemsSource="{Binding Values}"
+                                SelectedItemsOverride="{Binding EditableValue}">
+                <xctk:CheckListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type globalization:CultureInfo}">
+                        <TextBlock Text="{Binding EnglishName}" />
+                    </DataTemplate>
+                </xctk:CheckListBox.ItemTemplate>
+            </xctk:CheckListBox>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
