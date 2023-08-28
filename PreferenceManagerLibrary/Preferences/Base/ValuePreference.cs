@@ -43,7 +43,16 @@ namespace PreferenceManagerLibrary.Preferences.Base
                 RaisePropertyChanged(nameof(Error));
             }
         }
-
+        public bool IsEditing
+        {
+            get => IsEditing;
+            set
+            {
+                IsEditing = value;
+                RaisePropertyChanged();
+            }
+        }
+        private bool isEditing;
         public override bool IsEnabled
         {
             get => isEnabled;
@@ -109,14 +118,17 @@ namespace PreferenceManagerLibrary.Preferences.Base
 
         public virtual void BeginEdit()
         {
+            IsEditing = true;
             EditableValue = Value;
         }
         public virtual void CancelEdit()
         {
+            IsEditing = false;
             EditableValue = default;
         }
         public virtual void EndEdit()
         {
+            IsEditing = false;
             Value = EditableValue;
         }
     }
