@@ -45,10 +45,10 @@ namespace PreferenceManagerLibrary.Preferences.Base
         }
         public bool IsEditing
         {
-            get => IsEditing;
+            get => isEditing;
             set
             {
-                IsEditing = value;
+                isEditing = value;
                 RaisePropertyChanged();
             }
         }
