@@ -3,6 +3,9 @@ Preference Manager is a basic preference framework inspired by `androidx.prefere
 
 # Getting Started
 See example project for method and type usage examples.
+Projects that uses PreferenceManager library:
+    - [Hydrus Slideshow](https://github.com/PetrK39/HydrusSlideshow)
+    - [MultiLyrics](https://github.com/PetrK39/MultiLyrics)
 ## Creating Preference Storage
 Use one of available `IPreferenceStorage` providers or create your own:
 -  `XMLPreferenceStorage`
