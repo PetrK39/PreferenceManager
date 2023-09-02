@@ -20,7 +20,7 @@ Pass `PreferenceManager` to your ViewModel.
 ```c#
     public ObservableCollection<PreferenceBase> Preferences => preferenceManager.Preferences;
 
-    var preferenceManager = new PreferenceManager(new XMLPreferenceStorage("config.xml"));
+    preferenceManager = new PreferenceManager(new XMLPreferenceStorage("config.xml"));
 ```
 Bind preferences to your favorite ItemsControl using `ItemsSource="{Binding PreferenceManager.Preferences}"`. 
 ```xaml
