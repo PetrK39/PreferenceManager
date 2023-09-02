@@ -83,6 +83,7 @@ namespace PreferenceManagerLibrary.Preferences.Base
             get
             {
                 if (columnName != nameof(EditableValue)) return string.Empty;
+                if (ValueValidator is null) return string.Empty;
 
                 return ValueValidator.ValidateErrorInfo(EditableValue?.ToString());
             }
